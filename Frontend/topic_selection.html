@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic Selection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="pdf-viewer">
+            <iframe id="pdfFrame" src="" width="100%" height="100%"></iframe>
+        </div>
+        <div class="options-container">
+            <div class="container">
+                <label for="topic">Topic Name:</label>
+                <input type="text" id="topic" class="input-field" required>
+                <p class="warning" id="warning">Topic name required</p>
+                <div class="grid">
+                    <div class="card" onclick="validateInput('MCQs')">Generate MCQs</div>
+                    <div class="card" onclick="validateInput('QA')">Generate Questions and Answers</div>
+                    <div class="card" onclick="validateInput('Summary')">Summarize Topic</div>
+                </div>
+                <div class="custom-query">
+                    <textarea id="query" class="query-input" rows="1" placeholder="Type your custom query..."></textarea>
+                    <button class="mic-button" onclick="toggleSpeechRecognition()">🎤 Speak</button>
+                    <button class="submit-button" onclick="submitQuery()">⬆ Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

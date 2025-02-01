@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic Selection</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+        .input-field {
+            margin-top: 10px;
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .warning {
+            color: red;
+            display: none;
+            margin-top: 5px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .card {
+            background-color: #d9534f;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .card:hover {
+            background-color: #c9302c;
+            transform: scale(1.05);
+        }
+        .card:active {
+            transform: scale(0.95);
+        }
+        .custom-query {
+            margin-top: 20px;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .query-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            resize: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .mic-button, .submit-button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .mic-button:hover, .submit-button:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="topic">Topic Name:</label>
+        <input type="text" id="topic" class="input-field" required>
+        <p class="warning" id="warning">Topic name required</p>
+        <div class="grid">
+            <div class="card" onclick="validateInput('MCQs')">Generate MCQs</div>
+            <div class="card" onclick="validateInput('QA')">Generate Questions and Answers</div>
+            <div class="card" onclick="validateInput('Summary')">Summarize Topic</div>
+        </div>
+        <div class="custom-query">
+            <textarea id="query" class="query-input" rows="1" placeholder="Type your custom query..."></textarea>
+            <button class="mic-button" onclick="startSpeechRecognition()">🎤 Speak</button>
+            <button class="submit-button" onclick="submitQuery()">⬆ Submit</button>
+        </div>
+    </div>
+
+    <script>
+        let lastSpokenQuery = "";
+
+        function validateInput(action) {
+            const topicInput = document.getElementById("topic");
+            const warningText = document.getElementById("warning");
+            
+            if (topicInput.value.trim() === "") {
+                warningText.style.display = "block";
+            } else {
+                warningText.style.display = "none";
+                alert(`Performing action: ${action} for topic: ${topicInput.value}`);
+                // Redirect or perform action here
+            }
+        }
+        
+        function startSpeechRecognition() {
+            const queryInput = document.getElementById("query");
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = "en-US";
+            recognition.start();
+            
+            recognition.onresult = (event) => {
+                lastSpokenQuery = event.results[0][0].transcript;
+                queryInput.value = lastSpokenQuery;
+                queryInput.style.height = "auto";
+                queryInput.style.height = queryInput.scrollHeight + "px";
+            };
+        }
+        
+        function submitQuery() {
+            const queryInput = document.getElementById("query").value.trim();
+            if (lastSpokenQuery) {
+                alert(`Submitting spoken query: ${lastSpokenQuery}`);
+            } else if (queryInput) {
+                alert(`Submitting text query: ${queryInput}`);
+            } else {
+                alert("Please enter or speak a query before submitting.");
+            }
+        }
+    </script>
+</body>
+</html>
