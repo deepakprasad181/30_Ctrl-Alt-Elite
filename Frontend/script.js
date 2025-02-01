@@ -5,9 +5,25 @@ let lastSpokenQuery = "";  // Store the last recognized query
 // Function to navigate to the topic selection page with the PDF Base64 string stored in sessionStorage
 function navigateToTopicPage() {
     const fileInput = document.getElementById("fileInput");
+    const errorMessage = document.getElementById("error-message");
+    
     if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
         
+        // Check if the file is a valid PDF
+        if (file.type !== "application/pdf") {
+            errorMessage.textContent = "Please upload a valid PDF file.";
+            errorMessage.style.display = "block";
+            return;
+        }
+        
+        // Check the file size (max 10 MB)
+        if (file.size > 10 * 1024 * 1024) {
+            errorMessage.textContent = "File is too large. Please upload a file smaller than 10MB.";
+            errorMessage.style.display = "block";
+            return;
+        }
+
         // Read the file as a Base64 string
         const reader = new FileReader();
         reader.onloadend = function() {
@@ -22,6 +38,27 @@ function navigateToTopicPage() {
         
         reader.readAsDataURL(file); // Read the file as Base64
     }
+}
+
+// Drag and Drop functions
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function handleDrop(event) {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    const fileInput = document.getElementById("fileInput");
+    
+    fileInput.files = event.dataTransfer.files; // Set the file to the input
+
+    // Trigger the file input change event
+    navigateToTopicPage();
+}
+
+// Trigger file input when drag-and-drop area is clicked
+function triggerFileInput() {
+    document.getElementById("fileInput").click();
 }
 
 // On window load, retrieve the Base64 string from sessionStorage and display the PDF in the iframe
@@ -79,5 +116,16 @@ function submitQuery() {
         alert(`Submitting query: ${queryInput}`);
     } else {
         alert("Please enter or speak a query before submitting.");
+    }
+}
+
+// Ensure the topic field is required when a card is clicked
+function validateInput(type) {
+    const topicField = document.getElementById("topic");
+    if (!topicField.value.trim()) {
+        document.getElementById("warning").style.display = "block";
+    } else {
+        document.getElementById("warning").style.display = "none";
+        alert(`Selected option: ${type}`);
     }
 }
