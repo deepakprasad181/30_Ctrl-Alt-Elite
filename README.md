@@ -1,6 +1,4 @@
-Here's a sample `README.md` file for your GitHub repository that explains how to use the code, install dependencies, and run the application.
 
----
 
 # RAG Question Answer System
 
@@ -47,9 +45,7 @@ This system integrates with **Ollama's local LLM API** to process embeddings and
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/rag-question-answer-system.git
-cd rag-question-answer-system
-```
+git clone 
 
 2. Run the Streamlit app:
 
@@ -110,12 +106,3 @@ If you'd like to contribute to this project, feel free to fork the repository an
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-### Notes:
-1. Replace `https://github.com/yourusername/rag-question-answer-system.git` with your actual GitHub repository link.
-2. Adjust `app.py` file name if needed (the Streamlit app file).
-3. Ensure Ollama is correctly set up and running before testing.
-
-Let me know if you need further adjustments!
