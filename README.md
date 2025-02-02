@@ -1,6 +1,6 @@
 
 
-# RAG Question Answer System
+# RAG Study companion System
 
 This is a **RAG (Retriever-augmented Generation)** system built using Streamlit, Ollama's API for embeddings, and a vector store (Chroma) for document retrieval. The system allows users to upload PDF documents, store them in a vector store, and ask questions related to the content of these documents. The system retrieves relevant information from the documents and generates answers using a language model.
 
